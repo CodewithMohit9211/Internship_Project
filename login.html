@@ -1,0 +1,41 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login | InkSpace</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body data-page="login">
+  <div id="site-header"></div>
+
+  <main class="auth-wrapper">
+    <section class="auth-card">
+      <p class="eyebrow">GOOD TO SEE YOU AGAIN</p>
+      <h1>Welcome back.</h1>
+      <p class="muted">Your next great idea is just a login away.</p>
+
+      <div id="form-message" class="form-message" role="alert" hidden></div>
+
+      <form id="login-form">
+        <label for="email">Email address</label>
+        <input id="email" type="email" placeholder="you@example.com" required>
+
+        <label for="password">Password</label>
+        <input id="password" type="password"
+          placeholder="Enter your password" required>
+
+        <button class="btn btn-primary btn-full" type="submit">Log in</button>
+      </form>
+
+      <p class="auth-bottom">
+        New around here? <a href="register.html">Create an account</a>
+      </p>
+    </section>
+  </main>
+
+  <div id="site-footer"></div>
+</body>
+</html>

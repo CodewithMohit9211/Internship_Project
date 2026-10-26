@@ -1,0 +1,61 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>InkSpace | Stories That Matter</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body data-page="home">
+  <div id="site-header"></div>
+
+  <main class="container">
+    <section class="hero">
+      <p class="eyebrow">A LITTLE SPACE FOR BIG IDEAS</p>
+      <h1>Your thoughts.<br> Your stories. <span>Your space.</span></h1>
+      <p class="hero-text">
+        College life, random thoughts, lessons learned or stories
+        worth sharing. There's a little room for everything here.
+      </p>
+      <a href="create-blog.html" class="btn btn-primary">Write your first story ↗</a>
+    </section>
+
+    <section class="section">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">THE COMMUNITY</p>
+          <h2>Stories from our little corner</h2>
+        </div>
+      </div>
+
+      <div class="filters">
+        <input id="search-posts" type="search"
+          placeholder="Search stories..." aria-label="Search stories">
+
+        <select id="category-filter" aria-label="Filter by category">
+          <option value="All">All categories</option>
+          <option value="College Life">College Life</option>
+          <option value="Technology">Technology</option>
+          <option value="Personal">Personal</option>
+          <option value="Stories">Stories</option>
+          <option value="Lifestyle">Lifestyle</option>
+        </select>
+      </div>
+
+      <p id="post-count" class="muted"></p>
+      <div id="blog-list" class="blog-grid"></div>
+
+      <div id="empty-state" class="empty-state" hidden>
+        <div class="empty-icon">✍️</div>
+        <h3>No stories here just yet.</h3>
+        <p>Maybe your story could be the first one.</p>
+        <a href="create-blog.html" class="btn btn-primary">Start writing</a>
+      </div>
+    </section>
+  </main>
+
+  <div id="site-footer"></div>
+</body>
+</html>

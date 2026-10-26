@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Dashboard | InkSpace</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body data-page="dashboard">
+  <div id="site-header"></div>
+
+  <main class="container page-space">
+    <section class="dashboard-welcome">
+      <div>
+        <p class="eyebrow">YOUR PERSONAL CORNER</p>
+        <h1 id="welcome-message">Hey, welcome back!</h1>
+        <p class="muted">Got a thought? A story? Let's put it into words.</p>
+      </div>
+      <a href="create-blog.html" class="btn btn-primary">+ Write a story</a>
+    </section>
+
+    <section class="stats-grid">
+      <article class="stat-card">
+        <p>Total stories</p>
+        <h2 id="stat-total">0</h2>
+      </article>
+      <article class="stat-card">
+        <p>Published</p>
+        <h2 id="stat-published">0</h2>
+      </article>
+      <article class="stat-card">
+        <p>Drafts</p>
+        <h2 id="stat-drafts">0</h2>
+      </article>
+    </section>
+
+    <section class="section">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">YOUR WRITING DESK</p>
+          <h2>My stories</h2>
+        </div>
+
+        <select id="dashboard-filter" aria-label="Filter my stories">
+          <option value="All">All stories</option>
+          <option value="published">Published</option>
+          <option value="draft">Drafts</option>
+        </select>
+      </div>
+
+      <div id="dashboard-posts" class="dashboard-list"></div>
+
+      <div id="dashboard-empty" class="empty-state" hidden>
+        <div class="empty-icon">📝</div>
+        <h3>Your writing journey starts here.</h3>
+        <p>No stories yet. Every good writer starts somewhere.</p>
+        <a href="create-blog.html" class="btn btn-primary">Write something</a>
+      </div>
+    </section>
+  </main>
+
+  <div id="site-footer"></div>
+</body>
+</html>

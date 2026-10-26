@@ -1,0 +1,50 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Join InkSpace</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body data-page="register">
+  <div id="site-header"></div>
+
+  <main class="auth-wrapper">
+    <section class="auth-card">
+      <p class="eyebrow">YOUR STORY STARTS HERE</p>
+      <h1>Come on in.</h1>
+      <p class="muted">Create an account and give your ideas a home.</p>
+
+      <div id="form-message" class="form-message" role="alert" hidden></div>
+
+      <form id="register-form">
+        <label for="name">Your name</label>
+        <input id="name" type="text" placeholder="What should we call you?" required>
+
+        <label for="email">Email address</label>
+        <input id="email" type="email" placeholder="you@example.com" required>
+
+        <label for="password">Password</label>
+        <input id="password" type="password"
+          placeholder="At least 8 characters" minlength="8" required>
+
+        <label for="confirm-password">Confirm password</label>
+        <input id="confirm-password" type="password"
+          placeholder="Type it again" required>
+
+        <button class="btn btn-primary btn-full" type="submit">
+          Create my account
+        </button>
+      </form>
+
+      <p class="auth-bottom">
+        Already a member? <a href="login.html">Log in</a>
+      </p>
+    </section>
+  </main>
+
+  <div id="site-footer"></div>
+</body>
+</html>

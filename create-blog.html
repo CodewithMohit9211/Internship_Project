@@ -1,0 +1,67 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Write a Story | InkSpace</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body data-page="create">
+  <div id="site-header"></div>
+
+  <main class="container page-space">
+    <section class="editor-heading">
+      <p class="eyebrow">YOUR WORDS, YOUR WAY</p>
+      <h1 id="editor-title">Let's write something.</h1>
+      <p class="muted">Don't worry about making it perfect. Just start.</p>
+    </section>
+
+    <section class="editor-card">
+      <div id="form-message" class="form-message" role="alert" hidden></div>
+
+      <form id="blog-form">
+        <label for="blog-title">Story title</label>
+        <input id="blog-title" type="text"
+          placeholder="Give your story a name..." required maxlength="120">
+
+        <label for="blog-category">Category</label>
+        <select id="blog-category" required>
+          <option value="College Life">College Life</option>
+          <option value="Technology">Technology</option>
+          <option value="Personal">Personal</option>
+          <option value="Stories">Stories</option>
+          <option value="Lifestyle">Lifestyle</option>
+        </select>
+
+        <label for="blog-cover">Cover image URL <span class="muted">(optional)</span></label>
+        <input id="blog-cover" type="url" placeholder="https://example.com/image.jpg">
+
+        <label for="blog-excerpt">Short introduction</label>
+        <textarea id="blog-excerpt" rows="3" maxlength="250"
+          placeholder="Give readers a little preview..." required></textarea>
+
+        <div class="content-label">
+          <label for="blog-content">Your story</label>
+          <span id="word-count" class="muted">0 words</span>
+        </div>
+
+        <textarea id="blog-content" rows="12"
+          placeholder="Start writing here... take your time." required></textarea>
+
+        <div class="editor-actions">
+          <button type="button" id="save-draft" class="btn btn-outline">
+            Save as draft
+          </button>
+          <button type="submit" class="btn btn-primary">
+            Publish story ↗
+          </button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <div id="site-footer"></div>
+</body>
+</html>
