@@ -26,24 +26,24 @@ it is worth sharing. InkSpace gives both kinds of thoughts a home.
 - HTML5 for the page structure
 - CSS3 for the responsive layout and visual design
 - Vanilla JavaScript for the interactions and application logic
-- Browser `localStorage` for saving users, sessions, posts, and drafts
+- Node.js, Express, JWT and JSON files for users, sessions and posts
 
 ## How to run it
 
-1. Download or clone this project.
-2. Open the `Internship_Project` folder.
-3. Open `index.html` in a browser.
-4. Create an account and start writing.
+1. Open a terminal in `BACK-END` and run `npm install`.
+2. Copy `.env.example` to `.env` and set a long `JWT_SECRET`.
+3. Start the combined frontend and API server with `npm start`
+   (or `npm run dev`).
+4. Open `http://localhost:5050`.
 
-No server or package installation is needed for the current version. Since the
-project uses browser `localStorage`, the saved content stays in the same
-browser on the same device.
+Express serves the `FRONT-END` folder and the API from the same origin. The
+backend creates its `data/users.json` and `data/blogs.json` files automatically.
 
 ## A quick note
 
-This is a front-end learning project, so authentication and post data are
-handled in the browser. It is not intended for real production use yet, but it
-is a useful foundation for connecting a proper backend and database later.
+Authentication and blog data are handled by the Express backend. The JSON
+storage is suitable for local learning and demonstration, but a database and
+production secret management should be used before deployment.
 
 ---
 
@@ -75,16 +75,16 @@ provide karta hai.
 
 1. Project ko download ya clone karo.
 2. `Internship_Project` folder open karo.
-3. Browser mein `index.html` file open karo.
-4. Account banao aur apni first story likhna start karo.
+3. `BACK-END` mein `npm install` chalao aur `.env.example` se `.env` banao.
+4. `npm start` se backend chalao.
+5. `FRONT-END` ko Live Server jaise static server se serve karke
+   `http://127.0.0.1:5500/index.html` kholo.
 
-Is version ko chalane ke liye kisi server ya package installation ki zaroorat
-nahi hai. Data browser ke `localStorage` mein save hota hai, isliye content
-usi browser aur device par available rahega.
+Frontend backend API (`http://localhost:5050/api`) se connected hai. Backend
+users aur blogs ko `BACK-END/data` mein JSON files mein save karta hai.
 
 ## Project ke baare mein ek important baat
 
-Ye ek front-end learning project hai, isliye login aur blog data abhi browser
-mein hi handle hote hain. Production website ke liye proper backend aur
-database connect karna hoga. Filhaal, ye project un features ke liye ek strong
-starting point hai.
+Ye ab frontend aur backend dono ka learning project hai. Local JSON storage
+development ke liye theek hai, lekin production ke liye database aur secure
+secret management zaroori honge.
