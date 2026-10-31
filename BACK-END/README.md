@@ -1,86 +1,107 @@
 # InkSpace Backend
 
-A Node.js + Express REST API that stores users and blogs in JSON files and also serves the frontend.
+This folder contains the Node.js and Express.js application server for
+InkSpace. It provides the REST API and serves the static frontend from
+`../FRONT-END`.
 
-## Requirements
-- Node.js 18+
-- No MongoDB is required. Data is persisted to `data/users.json` and
-  `data/blogs.json` (created automatically on first run).
+## Start the application
 
-## Project layout
-```
-inkspace1/
-├── package.json          # root project; `npm start` runs the Express server
-├── backend/
-│   ├── server.js         # Express server: API + static frontend serving + client routing
-│   ├── src/
-│   │   ├── routes/       # authRoutes.js, blogRoutes.js
-│   │   ├── middleware/   # auth.js (JWT guard)
-│   │   ├── dataStore.js  # JSON file store for users
-│   │   ├── dataBlogStore.js  # JSON file store for blogs
-│   │   └── .env          # local config (NOT committed)
-│   ├── data/             # users.json / blogs.json (created at runtime)
-│   └── node_modules/
-└── frontend/             # static assets served by the backend
-    ├── index.html, login.html, register.html, dashboard.html, create-blog.html
-    ├── api.js            # InkSpaceAPI helper
-    ├── script.js         # page handlers using the API
-    ├── style.css
-    └── README.md
+```powershell
+cd D:\College_Project_Files\Internship_Project\BACK-END
+npm install
+Copy-Item .env.example .env
+npm run dev
 ```
 
-## Setup
-1. Open a terminal in `BACK-END` and run `npm install`.
-2. Copy `.env.example` to `.env` and set `JWT_SECRET` to a long random value.
-3. Start the combined app:
-   ```bash
-   npm run dev
-   ```
-   The Express server listens on port 5050 and serves both the REST API at
-   `http://localhost:5050/api/*` and the frontend at
-   `http://localhost:5050/`.
+Open the full application at:
 
-## API endpoints
-
-| Method | Endpoint | Auth | Purpose |
-|---|---|---|---|
-| GET | `/api/health` | No | Health check |
-| POST | `/api/auth/register` | No | Register user |
-| POST | `/api/auth/login` | No | Log in and receive JWT |
-| GET | `/api/auth/me` | Bearer token | Current user |
-| GET | `/api/blogs` | No | Published blogs; supports `search` and `category` query |
-| GET | `/api/blogs/mine` | Bearer token | Current user's blogs and drafts |
-| POST | `/api/blogs` | Bearer token | Create a blog |
-| PUT | `/api/blogs/:id` | Bearer token | Edit own blog |
-| DELETE | `/api/blogs/:id` | Bearer token | Delete own blog |
-
-## Example request bodies
-
-Register:
-```json
-{ "name": "Aisha Shaikh", "email": "aisha@example.com", "password": "strongpassword" }
+```text
+http://localhost:5050
 ```
 
-Login:
-```json
-{ "email": "aisha@example.com", "password": "strongpassword" }
+The API is available at:
+
+```text
+http://localhost:5050/api
 ```
 
-Create blog:
-```json
-{
-  "title": "My College Story",
-  "category": "College Life",
-  "cover": "",
-  "excerpt": "A short preview of my story.",
-  "content": "The full blog content goes here.",
-  "status": "published"
-}
+There is no need to run a separate frontend server.
+
+## Configuration
+
+The `.env` file uses:
+
+```env
+PORT=5050
+JWT_SECRET=replace_this_with_a_long_random_secret
+CLIENT_ORIGIN=http://localhost:5050
 ```
 
-Send this header to protected endpoints:
-`Authorization: Bearer YOUR_JWT_TOKEN`
+The backend stores local data in:
 
-## Frontend integration
-The Express server serves the `../FRONT-END` folder directly. No separate
-frontend server or Live Server session is required.
+- `data/users.json`
+- `data/blogs.json`
+
+These files are created automatically when the application starts.
+
+## API
+
+| Method | Endpoint | Purpose |
+|---|---|---|
+| GET | `/api/health` | Health check |
+| POST | `/api/auth/register` | Register a user |
+| POST | `/api/auth/login` | Login |
+| GET | `/api/auth/me` | Read the authenticated user |
+| GET | `/api/blogs` | Read published blogs |
+| GET | `/api/blogs/mine` | Read the authenticated user's blogs |
+| POST | `/api/blogs` | Create a blog |
+| PUT | `/api/blogs/:id` | Update an owned blog |
+| DELETE | `/api/blogs/:id` | Delete an owned blog |
+
+Protected endpoints require:
+
+```text
+Authorization: Bearer <jwt-token>
+```
+
+## Troubleshooting
+
+If port `5050` is already in use, open the existing application at
+`http://localhost:5050` or press `Ctrl + C` in the terminal running it.
+
+To stop the port from PowerShell:
+
+```powershell
+$processId = (Get-NetTCPConnection -LocalPort 5050 -State Listen).OwningProcess
+Stop-Process -Id $processId -Force
+```
+
+To clear local development data:
+
+```powershell
+Set-Content .\data\users.json -Value '[]'
+Set-Content .\data\blogs.json -Value '[]'
+```
+
+## Hinglish mein
+
+Ye folder InkSpace ka Node.js aur Express.js backend hai. Ye API provide karta
+hai aur `../FRONT-END` folder ko directly serve karta hai.
+
+### Run steps
+
+```powershell
+cd D:\College_Project_Files\Internship_Project\BACK-END
+npm install
+Copy-Item .env.example .env
+npm run dev
+```
+
+Browser mein ye address kholo:
+
+```text
+http://localhost:5050
+```
+
+Alag frontend server ki zaroorat nahi hai. Agar port busy ho, to existing
+server use karo ya terminal mein `Ctrl + C` press karke server stop karo.

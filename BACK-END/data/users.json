@@ -1,1 +1,14 @@
-[]
+[
+  {
+    "id": "f6574f18-a830-4cd9-8a13-f687bb26f403",
+    "name": "Sample",
+    "email": "aishashaik8989@gmail.com",
+    "passwordHash": "$2a$12$f9Mw3H8USWbGjFzNTxPamefRtzL73slqGwkPx7DWfb1v80dqAin.."
+  },
+  {
+    "id": "8892fa2a-7d4d-43fd-86df-eb6408c10689",
+    "name": "hwq",
+    "email": "aishashaik898@gmail.com",
+    "passwordHash": "$2a$12$9d4PTHyx372c1WO/whV88ONxGY5IhEjxLq3fw32ojML0P.WrZuDJe"
+  }
+]

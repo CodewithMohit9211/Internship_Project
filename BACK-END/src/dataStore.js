@@ -21,10 +21,17 @@ function readUsers() {
   }
 
   try {
-    const users = JSON.parse(contents);
-    if (!Array.isArray(users)) {
-      throw new Error("users.json must contain an array");
+    const parsed = JSON.parse(contents);
+    const users = Array.isArray(parsed) ? parsed : [parsed];
+
+    if (users.some(user => !user || typeof user !== "object" || Array.isArray(user))) {
+      throw new Error("users.json must contain user objects");
     }
+
+    if (!Array.isArray(parsed)) {
+      writeUsers(users);
+    }
+
     return users;
   } catch (error) {
     throw new Error(`Unable to read users data from ${usersFile}: ${error.message}`);
@@ -32,8 +39,13 @@ function readUsers() {
 }
 
 function writeUsers(users) {
+  const normalizedUsers = Array.isArray(users) ? users : [users];
   const tempFile = `${usersFile}.tmp`;
-  fs.writeFileSync(tempFile, JSON.stringify(users, null, 2) + "\n", "utf8");
+  fs.writeFileSync(
+    tempFile,
+    JSON.stringify(normalizedUsers, null, 2) + "\n",
+    "utf8"
+  );
   fs.renameSync(tempFile, usersFile);
 }
 

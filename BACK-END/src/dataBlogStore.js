@@ -21,10 +21,17 @@ function readBlogs() {
   }
 
   try {
-    const blogs = JSON.parse(contents);
-    if (!Array.isArray(blogs)) {
-      throw new Error("blogs.json must contain an array");
+    const parsed = JSON.parse(contents);
+    const blogs = Array.isArray(parsed) ? parsed : [parsed];
+
+    if (blogs.some(blog => !blog || typeof blog !== "object" || Array.isArray(blog))) {
+      throw new Error("blogs.json must contain blog objects");
     }
+
+    if (!Array.isArray(parsed)) {
+      writeBlogs(blogs);
+    }
+
     return blogs;
   } catch (error) {
     throw new Error(`Unable to read blogs data from ${blogsFile}: ${error.message}`);
@@ -32,8 +39,13 @@ function readBlogs() {
 }
 
 function writeBlogs(blogs) {
+  const normalizedBlogs = Array.isArray(blogs) ? blogs : [blogs];
   const tempFile = `${blogsFile}.tmp`;
-  fs.writeFileSync(tempFile, JSON.stringify(blogs, null, 2) + "\n", "utf8");
+  fs.writeFileSync(
+    tempFile,
+    JSON.stringify(normalizedBlogs, null, 2) + "\n",
+    "utf8"
+  );
   fs.renameSync(tempFile, blogsFile);
 }
 

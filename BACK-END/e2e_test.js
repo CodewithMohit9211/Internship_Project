@@ -132,9 +132,9 @@ const del = (path, token) => request("DELETE", path, null, token);
   check("GET /index.html -> rendered",
     index.status === 200 && String(index.body.raw || "").includes("InkSpace"), "index");
 
-  const api = await get("/api.js");
-  check("GET /api.js -> API helper",
-    api.status === 200 && String(api.body.raw || "").includes("InkSpaceAPI"), "api.js");
+  const script = await get("/script.js");
+  check("GET /script.js -> frontend application",
+    script.status === 200 && String(script.body.raw || "").includes("API_BASE"), "script.js");
 
   console.log(`\n==== ${passed} passed, ${failed} failed ====`);
   process.exit(failed ? 1 : 0);
