@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # InkSpace
 
 InkSpace is a full-stack blogging application. Users can create accounts,
@@ -245,6 +244,3 @@ http://localhost:5051
 
 Production deployment ke liye HTTPS, secure secret management, rate limiting,
 stronger validation, and proper logging should be added.
-=======
-# Internship_Project
->>>>>>> 8adecc949f1b965c96c25bc730b59f600af84f4b
