@@ -1,0 +1,19 @@
+# Environment secrets
+.env
+.env.*
+!.env.example
+
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Logs
+*.log
+
+# Coverage
+coverage/
+.nyc_output/
+
+
+# Supabase
+.supabase/
