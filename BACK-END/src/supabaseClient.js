@@ -18,6 +18,7 @@ if (!usesSecretKeyFormat && !usesLegacyServiceRoleFormat) {
   throw new Error(
     "Invalid Supabase API key. Copy the Secret key (sb_secret_...) or legacy " +
     "service-role key from Supabase Project Settings > API."
+
   );
 }
 
