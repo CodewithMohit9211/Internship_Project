@@ -11,10 +11,13 @@ if (!supabaseUrl || !supabaseKey) {
   );
 }
 
-if (!supabaseKey.startsWith("sb_secret_")) {
+const usesSecretKeyFormat = supabaseKey.startsWith("sb_secret_");
+const usesLegacyServiceRoleFormat = supabaseKey.startsWith("eyJ");
+
+if (!usesSecretKeyFormat && !usesLegacyServiceRoleFormat) {
   throw new Error(
-    "Invalid Supabase API key. Copy the Secret key (sb_secret_...) from " +
-    "Supabase Project Settings > API and set SUPABASE_SECRET_KEY in .env."
+    "Invalid Supabase API key. Copy the Secret key (sb_secret_...) or legacy " +
+    "service-role key from Supabase Project Settings > API."
   );
 }
 

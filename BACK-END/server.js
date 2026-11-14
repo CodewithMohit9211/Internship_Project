@@ -1,5 +1,5 @@
-
 const path = require("path");
+const crypto = require("crypto");
 
 // Load .env before importing routes or Supabase
 require("dotenv").config({
@@ -21,9 +21,27 @@ const PORT = Number.isInteger(configuredPort) &&
   : 5051;
 const FRONTEND_DIR = path.join(__dirname, "..", "FRONT-END");
 
+// Request ID middleware
+app.use((req, res, next) => {
+  req.id = crypto.randomUUID();
+  res.setHeader("X-Request-Id", req.id);
+  next();
+});
+
+// Security headers middleware
+app.use((_req, res, next) => {
+  res.setHeader("X-Content-Type-Options", "nosniff");
+  res.setHeader("X-Frame-Options", "DENY");
+  res.setHeader("X-XSS-Protection", "0");
+  res.setHeader("Referrer-Policy", "strict-origin-when-cross-origin");
+  next();
+});
+
 app.use(cors({
   origin: process.env.CLIENT_ORIGIN || true
 }));
+
+app.options("*", cors());
 
 app.use(express.json({ limit: "1mb" }));
 
@@ -57,17 +75,24 @@ app.get("*", (_req, res) => {
 });
 
 // Error handler
-app.use((err, _req, res, _next) => {
+app.use((err, req, res, _next) => {
   console.error(err);
 
   const message = err.code === "PGRST205"
     ? "Supabase tables are missing. Run BACK-END/supabase-schema.sql in Supabase SQL Editor."
     : err.message || "Internal server error";
 
-  res.status(err.status || 500).json({
+  const response = {
     success: false,
-    message
-  });
+    message,
+    requestId: req.id || res.getHeader("X-Request-Id")
+  };
+
+  if (process.env.NODE_ENV !== "production") {
+    response.stack = err.stack;
+  }
+
+  res.status(err.status || 500).json(response);
 });
 
 const server = app.listen(PORT, () => {

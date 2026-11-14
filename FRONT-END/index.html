@@ -1,17 +1,21 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="InkSpace is a home for thoughts, college life experiences, lessons learned, and stories that matter.">
   <title>InkSpace | Stories That Matter</title>
   <link rel="stylesheet" href="style.css">
   <script src="script.js" defer></script>
 </head>
 <body data-page="home">
+  <noscript>
+    <p class="form-message" style="text-align: center; margin: 15px auto; max-width: 600px;">JavaScript is required to use InkSpace.</p>
+  </noscript>
+
   <div id="site-header"></div>
 
-  <main class="container">
+  <main class="container page-enter">
     <div class="scroll-decor" aria-hidden="true">
       <span class="decor-orb decor-orb-one" data-parallax="0.12"></span>
       <span class="decor-ring decor-ring-one" data-parallax="-0.08"></span>
@@ -52,6 +56,7 @@
       </div>
 
       <p id="post-count" class="muted"></p>
+      <div id="page-message" class="form-message" role="alert" hidden></div>
       <div id="blog-list" class="blog-grid"></div>
 
       <div id="empty-state" class="empty-state" hidden>

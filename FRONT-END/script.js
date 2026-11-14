@@ -5,6 +5,14 @@ const API_BASE = window.location.protocol === "file:" ||
 
 const $ = id => document.getElementById(id);
 
+function debounce(fn, delay = 300) {
+  let timer;
+  return function (...args) {
+    clearTimeout(timer);
+    timer = setTimeout(() => fn.apply(this, args), delay);
+  };
+}
+
 async function api(url, options = {}) {
   const headers = {
     "Content-Type": "application/json",
@@ -56,6 +64,13 @@ async function currentUser() {
 
 function showMessage(text) {
   const box = $("form-message");
+  if (!box) return;
+  box.textContent = text;
+  box.hidden = false;
+}
+
+function showPageMessage(text) {
+  const box = $("page-message");
   if (!box) return;
   box.textContent = text;
   box.hidden = false;
@@ -250,6 +265,7 @@ function setupLayout(user) {
   `;
 
   $("logout-btn")?.addEventListener("click", () => {
+    if (!confirm("Are you sure you want to log out?")) return;
     localStorage.removeItem("auth_token");
     location.href = "index.html";
   });
@@ -378,6 +394,16 @@ function register() {
 
 function login() {
   const form = $("login-form");
+  const passwordInput = $("password");
+  const toggleButton = $("toggle-password");
+
+  toggleButton?.addEventListener("click", () => {
+    const isVisible = passwordInput.type === "text";
+    passwordInput.type = isVisible ? "password" : "text";
+    toggleButton.textContent = isVisible ? "Show" : "Hide";
+    toggleButton.setAttribute("aria-label", `${isVisible ? "Show" : "Hide"} password`);
+    toggleButton.setAttribute("aria-pressed", String(!isVisible));
+  });
 
   form.addEventListener("submit", async event => {
     event.preventDefault();
@@ -405,8 +431,12 @@ function login() {
 
 async function showPosts() {
   const list = $("blog-list");
+  let searchRequestId = 0;
 
   async function render() {
+    searchRequestId += 1;
+    const currentRequestId = searchRequestId;
+
     showStorySkeletons();
     const search = $("search-posts").value.trim();
     const category = $("category-filter").value;
@@ -417,6 +447,8 @@ async function showPosts() {
 
     try {
       const data = await api(`/blogs${query.toString() ? `?${query}` : ""}`);
+      if (currentRequestId !== searchRequestId) return;
+
       const visiblePosts = data.blogs || [];
 
       $("post-count").textContent =
@@ -444,15 +476,17 @@ async function showPosts() {
       list.removeAttribute("aria-busy");
       list.removeAttribute("aria-label");
     } catch (error) {
+      if (currentRequestId !== searchRequestId) return;
+
       list.innerHTML = "";
       list.removeAttribute("aria-busy");
       list.removeAttribute("aria-label");
       $("empty-state").hidden = false;
-      showMessage(error.message || "Stories could not be loaded.");
+      showPageMessage(error.message || "Stories could not be loaded.");
     }
   }
 
-  $("search-posts").addEventListener("input", render);
+  $("search-posts").addEventListener("input", debounce(render, 300));
   $("category-filter").addEventListener("change", render);
   await render();
 }
@@ -543,21 +577,42 @@ async function dashboard(user) {
 
   list.addEventListener("click", async event => {
     const button = event.target.closest("button[data-action]");
-    if (!button) return;
+    if (!button || button.disabled) return;
 
     const post = mine.find(item => item.id === button.dataset.id);
     if (!post) return;
+
+    const row = button.closest(".dashboard-post") || button.closest(".post-actions");
+    const rowButtons = row ? Array.from(row.querySelectorAll("button")) : [button];
+    const originalText = button.textContent;
+
+    const setRowBusy = (busy) => {
+      rowButtons.forEach(btn => {
+        btn.disabled = busy;
+      });
+      if (busy) {
+        button.textContent = "...";
+      } else {
+        button.textContent = originalText;
+      }
+    };
+
+    setRowBusy(true);
 
     if (button.dataset.action === "edit") {
       location.href = `create-blog.html?id=${encodeURIComponent(post.id)}`;
       return;
     }
 
+    if (button.dataset.action === "delete") {
+      if (!confirm("Delete this story? You won't be able to get it back.")) {
+        setRowBusy(false);
+        return;
+      }
+    }
+
     try {
       if (button.dataset.action === "delete") {
-        if (!confirm("Delete this story? You won't be able to get it back.")) {
-          return;
-        }
         await api(`/blogs/${encodeURIComponent(post.id)}`, { method: "DELETE" });
       } else if (button.dataset.action === "toggle") {
         await api(`/blogs/${encodeURIComponent(post.id)}`, {
@@ -569,6 +624,8 @@ async function dashboard(user) {
       await render();
     } catch (error) {
       showMessage(error.message || "The story could not be updated.");
+    } finally {
+      setRowBusy(false);
     }
   });
 
@@ -576,6 +633,12 @@ async function dashboard(user) {
 }
 
 async function createBlog(user) {
+  const formMessage = $("form-message");
+  if (formMessage) {
+    formMessage.textContent = "";
+    formMessage.hidden = true;
+  }
+
   const form = $("blog-form");
   const params = new URLSearchParams(location.search);
   const editId = params.get("id");
@@ -611,6 +674,7 @@ async function createBlog(user) {
   }
 
   $("blog-content").addEventListener("input", updateWordCount);
+  $("blog-content").addEventListener("paste", updateWordCount);
   updateWordCount();
 
   async function savePost(status) {

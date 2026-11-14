@@ -1,11 +1,16 @@
+<<<<<<< HEAD
 # Dependencies
 **/node_modules/
 
 # Environment files and secrets
+=======
+# Environment secrets
+>>>>>>> e2c2c99b5584656244c9cbdcf413698ffac2441e
 .env
 .env.*
 !.env.example
 
+<<<<<<< HEAD
 # Logs and runtime output
 *.log
 npm-debug.log*
@@ -27,3 +32,20 @@ Thumbs.db
 *.tmp
 *.temp
 *.swp
+=======
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Logs
+*.log
+
+# Coverage
+coverage/
+.nyc_output/
+
+
+# Supabase
+.supabase/
+>>>>>>> e2c2c99b5584656244c9cbdcf413698ffac2441e
+        
