@@ -1,7 +1,8 @@
-const API_BASE = window.location.protocol === "file:" ||
+const API_BASE = window.INKSPACE_API_BASE ||
+  (window.location.protocol === "file:" ||
   window.location.port === "5500"
-  ? "http://localhost:5051/api"
-  : "/api";
+    ? "http://localhost:5051/api"
+    : "/api");
 
 const $ = id => document.getElementById(id);
 

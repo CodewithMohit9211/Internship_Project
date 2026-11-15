@@ -215,3 +215,37 @@ Live Server ya Python server chalane ki zaroorat nahi hai.
 
 Production deployment ke liye HTTPS, secure secret management, rate limiting,
 stronger validation, and proper logging should be added.
+
+## Deploy on Render and Netlify
+
+The recommended production setup is:
+
+1. Push this project to GitHub. Never commit `BACK-END/.env`.
+2. On Render, create a **Web Service** from the repository:
+   - Root Directory: `BACK-END`
+   - Build Command: `npm install`
+   - Start Command: `npm start`
+3. Add these Render environment variables:
+   - `SUPABASE_URL`: your Supabase project URL
+   - `SUPABASE_SECRET_KEY`: a new backend-only Supabase secret key
+   - `JWT_SECRET`: a new long random secret
+   - `CLIENT_ORIGIN`: your final Netlify URL
+   - `NODE_ENV`: `production`
+4. Run `BACK-END/supabase-schema.sql` in the Supabase SQL Editor if the
+   tables do not exist.
+5. On Netlify, create a site from the same repository:
+   - Base directory: `FRONT-END`
+   - Publish directory: `.`
+6. After Render gives you its URL, edit `FRONT-END/config.js`:
+
+   ```js
+   window.INKSPACE_API_BASE = "https://your-service.onrender.com/api";
+   ```
+
+   Commit and push that change, then redeploy Netlify.
+7. Test `https://your-service.onrender.com/api/health`, then test register,
+   login, and blog creation from the Netlify URL.
+
+The Supabase secret currently present in any local `.env` must be revoked and
+replaced before deployment if it has been shared or committed. Do not put that
+secret or `JWT_SECRET` in Netlify.

@@ -2,9 +2,6 @@
 **/node_modules/
 
 # Environment files and secrets
-=======
-# Environment secrets
->>>>>>> 05aaa96432f0c49b0a55c3e2c9e10075ce8f4956
 .env
 .env.*
 !.env.example
@@ -30,23 +27,4 @@ Thumbs.db
 *.tmp
 *.temp
 *.swp
-# Dependencies
-node_modules/
-**/node_modules/
-
-# Logs
-*.log
-
-# Coverage
-coverage/
-.nyc_output/
-
-
-# Supabase
-<<<<<<< HEAD
 .supabase/
->>>>>>> e2c2c99b5584656244c9cbdcf413698ffac2441e
-        
-=======
-.supabase/
->>>>>>> 05aaa96432f0c49b0a55c3e2c9e10075ce8f4956
