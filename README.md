@@ -1,36 +1,48 @@
 # InkSpace
 
-InkSpace is a full-stack blogging application. Users can create accounts,
-write stories, save drafts, publish posts, and manage their own writing from a
-dashboard.
+> **Write. Share. Inspire.**
 
-The project is built for learning and internship practice. The Express server
-serves both the frontend and backend, so the complete application runs from one
-Node.js process.
+InkSpace is a full-stack blogging platform where users can create an account,
+write stories, save drafts, publish posts, and manage their content from a
+personal dashboard.
+
+Built with simple web technologies for learning, internship practice, and
+real-world deployment.
+
+## Live Preview
+
+| App | Link |
+|---|---|
+| **InkSpace Website** | [Open Live Website](https://share-blog.netlify.app/) |
+| **Backend API** | [Check API Health](https://internship-project-sali.onrender.com/api/health) |
+| **Source Code** | [View on GitHub](https://github.com/CodewithMohit9211/Internship_Project) |
+
+> **Hinglish:** Website live hai. Upar diye gaye buttons par click karke direct
+> project open ya API status check kar sakte ho.
 
 ## Features
 
-- User registration and JWT login
-- Protected user dashboard
-- Create, edit, publish, unpublish, and delete stories
+- User registration and secure JWT login
+- Create, edit, publish, unpublish, and delete blogs
 - Save stories as drafts
-- Category selection and optional cover image
-- Public search and category filtering
-- Writing statistics for total stories, published stories, and drafts
-- Supabase database storage
+- Personal dashboard with writing statistics
+- Public blog search and category filtering
+- Optional cover image for every blog
+- Supabase database integration
+- Responsive frontend with vanilla HTML, CSS, and JavaScript
 
-## Technology
+## Tech Stack
 
-- HTML5
-- CSS3
-- Vanilla JavaScript
-- Node.js
-- Express.js
-- JWT authentication
-- bcryptjs password hashing
-- Supabase database storage
+| Layer | Technology |
+|---|---|
+| Frontend | HTML5, CSS3, Vanilla JavaScript |
+| Backend | Node.js, Express.js |
+| Authentication | JWT and bcryptjs |
+| Database | Supabase |
+| Frontend Hosting | Netlify |
+| Backend Hosting | Render |
 
-## Project structure
+## Project Structure
 
 ```text
 Internship_Project/
@@ -40,6 +52,7 @@ Internship_Project/
 │   ├── register.html
 │   ├── dashboard.html
 │   ├── create-blog.html
+│   ├── config.js
 │   ├── script.js
 │   └── style.css
 ├── BACK-END/
@@ -55,197 +68,105 @@ Internship_Project/
 └── README.md
 ```
 
-## Requirements
+## Run Locally
+
+### Requirements
 
 - Node.js 18 or newer
 - npm
+- Supabase project
 
-MongoDB is not required. Run `BACK-END/supabase-schema.sql` in the Supabase
-SQL Editor before starting the backend. Configure the Supabase Project URL and
-backend-only Service Role Key in `BACK-END/.env`.
-
-## Setup and run
-
-Open PowerShell or a terminal and run:
+### Installation
 
 ```powershell
 cd D:\College_Project_Files\Internship_Project\BACK-END
 npm install
 Copy-Item .env.example .env
-npm run dev
+npm start
 ```
 
-If you are using Command Prompt instead of PowerShell, copy the environment
-file with:
+Open the app at [http://localhost:5051](http://localhost:5051).
 
-```bat
-copy .env.example .env
-```
+> **Hinglish:** Local development ke liye sirf backend start karo. Express
+> server frontend aur API dono serve karta hai, isliye Live Server ki zaroorat
+> nahi hai.
 
-Open the application in your browser:
+## Environment Variables
 
-```text
-http://localhost:5051
-```
-
-The same Express server provides the API:
-
-```text
-http://localhost:5051/api
-```
-
-No separate Live Server, Python server, or frontend command is required.
-
-Open the application through `http://localhost:5051`, not by double-clicking
-an HTML file. If the frontend is opened with `file://` or Live Server on port
-`5500`, it will still try to connect to the backend at `http://localhost:5051`.
-
-To confirm the backend is running:
-```powershell
-Invoke-RestMethod http://localhost:5051/api/health
-```
-
-If the API reports that `public.users` or `public.blogs` is missing, open the
-Supabase SQL Editor for the project in `SUPABASE_URL` and run the complete
-`BACK-END/supabase-schema.sql` file. The backend also requires the
-backend-only `SUPABASE_SERVICE_ROLE_KEY`; never expose it in frontend code.
-
-## Environment configuration
-
-The `.env` file should contain:
+Add these values to `BACK-END/.env`:
 
 ```env
 PORT=5051
-JWT_SECRET=replace_this_with_a_long_random_secret
+SUPABASE_URL=your-supabase-project-url
+SUPABASE_SECRET_KEY=your-backend-only-secret-key
+JWT_SECRET=your-long-random-jwt-secret
 CLIENT_ORIGIN=http://localhost:5051
-SUPABASE_URL=https://your-project-id.supabase.co
-SUPABASE_SERVICE_ROLE_KEY=your-backend-only-secret
-# Or, for newer Supabase projects:
-# SUPABASE_SECRET_KEY=your-backend-only-secret
 ```
 
-Use a long, private value for `JWT_SECRET`. Do not commit `.env`, service-role
-keys, JWT secrets, `node_modules`, or log files to source control. The project
-`.gitignore` already excludes these files while keeping `.env.example`.
-`JWT_SECRET` must be configured separately from the Supabase key.
+Run `BACK-END/supabase-schema.sql` in the Supabase SQL Editor before using the
+database features.
 
-The backend uses the Supabase Service Role or Secret Key only on the server. It
-is never needed in frontend files and must never be exposed to browsers.
+Never commit `.env`, Supabase secret keys, or JWT secrets. Backend secrets
+must never be added to frontend files.
 
-## API endpoints
+## API Endpoints
 
-| Method | Endpoint | Authentication | Purpose |
-|---|---|---|---|
-| GET | `/api/health` | No | Check that the server is running |
-| POST | `/api/auth/register` | No | Create an account |
-| POST | `/api/auth/login` | No | Log in and receive a JWT |
-| GET | `/api/auth/me` | Bearer token | Get the current user |
-| GET | `/api/blogs` | No | List published stories |
-| GET | `/api/blogs/:id` | No | View one published story |
-| GET | `/api/blogs/mine` | Bearer token | List the current user's stories |
-| POST | `/api/blogs` | Bearer token | Create a story |
-| PUT | `/api/blogs/:id` | Bearer token | Update an owned story |
-| DELETE | `/api/blogs/:id` | Bearer token | Delete an owned story |
+| Method | Endpoint | Purpose |
+|---|---|---|
+| GET | `/api/health` | Check API status |
+| POST | `/api/auth/register` | Register a new user |
+| POST | `/api/auth/login` | Login and receive a JWT |
+| GET | `/api/auth/me` | Get the logged-in user |
+| GET | `/api/blogs` | List published blogs |
+| GET | `/api/blogs/:id` | View one published blog |
+| GET | `/api/blogs/mine` | List the user's blogs |
+| POST | `/api/blogs` | Create a blog |
+| PUT | `/api/blogs/:id` | Update a blog |
+| DELETE | `/api/blogs/:id` | Delete a blog |
 
-Public stories support these query parameters:
+## Deployment
 
-```text
-/api/blogs?search=college&category=College%20Life
-```
+### Render Backend
 
-Search checks the story title, introduction, full content, category, and
-author. Published story cards link to their individual detail page.
+Create a Render Web Service with:
+
+- **Root Directory:** `BACK-END`
+- **Build Command:** `npm install`
+- **Start Command:** `npm start`
+
+Add `SUPABASE_URL`, `SUPABASE_SECRET_KEY`, `JWT_SECRET`,
+`CLIENT_ORIGIN`, and `NODE_ENV=production` in Render environment variables.
+
+### Netlify Frontend
+
+Create a Netlify site with:
+
+- **Base Directory:** `FRONT-END`
+- **Publish Directory:** `.`
+
+The deployed Render API URL is configured in
+[`FRONT-END/config.js`](FRONT-END/config.js).
+
+> **Hinglish:** Frontend Netlify par aur backend Render par host hai. Agar
+> Render URL change ho, to `config.js` mein API URL update karke redeploy karo.
 
 ## Validation
 
-Check JavaScript syntax without starting the server:
+Check JavaScript syntax:
 
 ```powershell
-cd D:\College_Project_Files\Internship_Project\BACK-END
-node --check server.js
-node --check src\routes\authRoutes.js
-node --check src\routes\blogRoutes.js
-cd ..\FRONT-END
-node --check script.js
+cd D:\College_Project_Files\Internship_Project
+node --check FRONT-END\script.js
+node --check FRONT-END\config.js
+node --check BACK-END\server.js
 ```
 
-With valid Supabase settings and the backend running, execute the end-to-end
-checks:
+Check the deployed backend:
 
 ```powershell
-cd D:\College_Project_Files\Internship_Project\BACK-END
-node e2e_test.js
+Invoke-RestMethod https://internship-project-sali.onrender.com/api/health
 ```
 
-The test checks health, registration, login, authentication, blog CRUD,
-content filtering, and frontend serving.
+## License
 
-## Common terminal problems
-
-### Port already in use
-
-If you see `EADDRINUSE`, the application is already running or another
-program is using port `5051`. First open:
-
-```text
-http://localhost:5051
-```
-
-To stop the process using port `5051` in PowerShell:
-
-```powershell
-$processId = (Get-NetTCPConnection -LocalPort 5051 -State Listen).OwningProcess
-Stop-Process -Id $processId -Force
-```
-
-You can also stop the server directly by pressing `Ctrl + C` in its terminal.
-
-## Hinglish guide
-
-### InkSpace kya hai?
-
-InkSpace ek full-stack blogging application hai. Isme user account bana
-sakta hai, login kar sakta hai, stories likh sakta hai, draft save kar sakta
-hai aur published stories ko manage kar sakta hai.
-
-Frontend aur backend dono Express server se run hote hain. Isliye alag se
-Live Server ya Python server chalane ki zaroorat nahi hai.
-
-## Production note
-
-Production deployment ke liye HTTPS, secure secret management, rate limiting,
-stronger validation, and proper logging should be added.
-
-## Deploy on Render and Netlify
-
-The recommended production setup is:
-
-1. Push this project to GitHub. Never commit `BACK-END/.env`.
-2. On Render, create a **Web Service** from the repository:
-   - Root Directory: `BACK-END`
-   - Build Command: `npm install`
-   - Start Command: `npm start`
-3. Add these Render environment variables:
-   - `SUPABASE_URL`: your Supabase project URL
-   - `SUPABASE_SECRET_KEY`: a new backend-only Supabase secret key
-   - `JWT_SECRET`: a new long random secret
-   - `CLIENT_ORIGIN`: your final Netlify URL
-   - `NODE_ENV`: `production`
-4. Run `BACK-END/supabase-schema.sql` in the Supabase SQL Editor if the
-   tables do not exist.
-5. On Netlify, create a site from the same repository:
-   - Base directory: `FRONT-END`
-   - Publish directory: `.`
-6. After Render gives you its URL, edit `FRONT-END/config.js`:
-
-   ```js
-   window.INKSPACE_API_BASE = "https://your-service.onrender.com/api";
-   ```
-
-   Commit and push that change, then redeploy Netlify.
-7. Test `https://your-service.onrender.com/api/health`, then test register,
-   login, and blog creation from the Netlify URL.
-
-The Supabase secret currently present in any local `.env` must be revoked and
-replaced before deployment if it has been shared or committed. Do not put that
-secret or `JWT_SECRET` in Netlify.
+This project is created for educational and internship practice.
