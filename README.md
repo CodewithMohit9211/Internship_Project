@@ -13,7 +13,7 @@ real-world deployment.
 
 | App | Link |
 |---|---|
-| **InkSpace Website** | [Open Live Website](https://share-blog.netlify.app/) |
+| **InkSpace Website** | [Open Live Website](https://internship-project-sali.onrender.com) |
 | **Backend API** | [Check API Health](https://internship-project-sali.onrender.com/api/health) |
 | **Source Code** | [View on GitHub](https://github.com/CodewithMohit9211/Internship_Project) |
 
