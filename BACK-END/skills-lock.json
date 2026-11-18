@@ -1,21 +1,11 @@
 {
   "version": 2,
-=======
-  "version": 1,
->>>>>>> 05aaa96432f0c49b0a55c3e2c9e10075ce8f4956
   "skills": {
     "supabase-server": {
       "source": "supabase/server",
       "sourceType": "github",
       "skillPath": "skills/supabase-server/SKILL.md",
-      "computedHash": "9a560aef83b25cbd6aa1c4f77dcdad7c771014d7ba30f64811b81516477ead12"
+      "computedHash": "9a560aef83b25cbd6aa1c4f77dcdad7c771014d7ba30f64511b81516477ead12"
     }
   }
 }
-
-=======
-      "computedHash": "72fecd2513a506927ef55e01a387ac5d48be6693edb0fc7052225151ee7b2f56"
-    }
-  }
-}
->>>>>>> 05aaa96432f0c49b0a55c3e2c9e10075ce8f4956

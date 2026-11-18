@@ -1,1 +1,1 @@
-window.INKSPACE_API_BASE = "https://internship-project-sali.onrender.com";
+window.INKSPACE_API_BASE = "https://internship-project-sali.onrender.com/api";
